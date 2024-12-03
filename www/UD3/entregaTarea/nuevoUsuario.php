@@ -1,21 +1,21 @@
 <?php
-require_once 'conexiones/pdo.php'; // Asegúrate de que la conexión sea PDO.
+require_once 'conexiones/pdo.php'; 
 
-// Comprobamos si se han enviado los datos por POST.
+// Comprobo si se han enviado os datos por POST.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
-    $contrasena = password_hash($_POST['contrasena'], PASSWORD_BCRYPT); // Hasheamos la contraseña
+    $contrasena = password_hash($_POST['contrasena'], PASSWORD_BCRYPT); // Hasheamos a contraseña
 
-    // Instanciamos la clase de conexión a la base de datos.
+    // conexión a base de datos.
     $db = new DatabasePDO();
     $conn = $db->conn;
 
-    // Preparamos la consulta para insertar el nuevo usuario en la base de datos.
+    // Preparo a consulta para insertar  novo usuario na base de datos.
     $query = $conn->prepare("INSERT INTO usuarios (username, nombre, apellidos, contrasena) VALUES (:username, :nombre, :apellidos, :contrasena)");
 
-    // Ejecutamos la consulta con los valores proporcionados.
+    // Ejecuto a consulta cos valores proporcionados.
     $query->execute([
         ':username' => $username,
         ':nombre' => $nombre,
@@ -23,11 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ':contrasena' => $contrasena
     ]);
 
-    // Si todo ha salido bien, redirigimos a la lista de usuarios.
+    // Si todo saiu ben, redirigo a  lista de usuarios.
     header("Location: usuarios.php");
-    exit(); // Importante para evitar que el código continúe ejecutándose.
+    exit(); // Importante para evitar que o código continúe executándose.
 } else {
-    // Si no se ha enviado por POST, redirigimos al formulario de creación de usuario.
+    // Si non foi enviado por POST, redirixo p formulario de creación de usuario.
     header("Location: nuevoUsuarioForm.php");
     exit();
 }

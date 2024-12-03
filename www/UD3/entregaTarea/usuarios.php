@@ -48,7 +48,7 @@ $usuarios = $query->fetchAll(PDO::FETCH_ASSOC);
     </table>
 </div>
 <div class="container mt-5">
-        <!-- Enlace a la página principal -->
+        
         <a href="index.php" class="btn btn-primary mb-3">Volver a la página principal</a>
 </div>
 </body>

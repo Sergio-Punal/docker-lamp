@@ -1,6 +1,6 @@
-<!-- nuevoUsuarioForm.php -->
+
 <?php
-require_once 'conexiones/pdo.php'; // Asumimos que la conexión es PDO aquí.
+require_once 'conexiones/pdo.php'; 
 ?>
 
 <!DOCTYPE html>

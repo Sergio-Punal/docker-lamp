@@ -2,7 +2,7 @@
 class DatabasePDO {
     private $dsn = 'mysql:host=db;dbname=tareas;charset=utf8';
     private $user = 'root'; // Usuario de MySQL
-    private $password = ''; // Contraseña de MySQL 
+    private $password = 'test'; // Contraseña de MySQL 
     public $conn;
 
     public function __construct() {

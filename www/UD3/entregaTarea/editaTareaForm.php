@@ -2,11 +2,11 @@
 require 'conexiones/pdo.php';
 
 if (isset($_GET['id'])) {
-    $id = (int)$_GET['id'];  // Asegurarnos de que el id es un entero
+    $id = (int)$_GET['id'];  // Asegurar de que o id é un entero
     $db = new DatabasePDO();
     $conn = $db->conn;
 
-    // Consultar la tarea correspondiente a ese ID
+    // Consultae  tarea correspondente a ese ID
     $query = $conn->prepare("SELECT * FROM tareas WHERE id = :id");
     $query->execute([':id' => $id]);
     $tarea = $query->fetch(PDO::FETCH_ASSOC);
@@ -33,9 +33,9 @@ if (isset($_GET['id'])) {
 <body>
 <div class="container mt-5">
     <h1>Editar Tarea</h1>
-    <!-- Formulario para editar la tarea -->
+    
     <form action="editaTareaForm.php" method="post">
-        <input type="hidden" name="id" value="<?= $tarea['id'] ?>">  <!-- Enviar el ID de la tarea -->
+        <input type="hidden" name="id" value="<?= $tarea['id'] ?>">  
         
         <div class="mb-3">
             <label for="titulo" class="form-label">Título:</label>

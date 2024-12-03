@@ -3,18 +3,18 @@
 require 'conexiones/pdo.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar y sanitizar datos del formulario
+    // Validar os datos 
     $titulo = htmlspecialchars($_POST['titulo']);
     $descripcion = htmlspecialchars($_POST['descripcion']);
     $estado = htmlspecialchars($_POST['estado']);
     $id_usuario = !empty($_POST['id_usuario']) ? (int)$_POST['id_usuario'] : null;
 
-    // Conexión a la base de datos usando PDO
+    // Conexión a  base de datos usando PDO
     $db = new DatabasePDO();
     $conn = $db->conn;
 
     try {
-        // Insertar nueva tarea en la base de datos
+        // Insertar nova tarea na base de datos
         $query = $conn->prepare("
             INSERT INTO tareas (titulo, descripcion, estado, id_usuario)
             VALUES (:titulo, :descripcion, :estado, :id_usuario)
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select id="id_usuario" name="id_usuario" class="form-select">
                     <option value="" disabled selected>Seleccione un usuario (opcional)</option>
                     <?php
-                    // Obtener usuarios de la base de datos para el dropdown
+                    // Obtener usuarios de la base de datos
                     try {
                         $query = $conn->query("SELECT id, nombre, apellidos FROM usuarios");
                         while ($user = $query->fetch(PDO::FETCH_ASSOC)) {
