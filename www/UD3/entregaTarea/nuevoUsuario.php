@@ -1,30 +1,36 @@
 <?php
-require 'conexiones/pdo.php';
+require_once 'conexiones/pdo.php'; // Asegúrate de que la conexión sea PDO.
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = htmlspecialchars($_POST['username']);
-    $nombre = htmlspecialchars($_POST['nombre']);
-    $apellidos = htmlspecialchars($_POST['apellidos']);
-    $contraseña = password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
+// Comprobamos si se han enviado los datos por POST.
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $nombre = $_POST['nombre'];
+    $apellidos = $_POST['apellidos'];
+    $contrasena = password_hash($_POST['contrasena'], PASSWORD_BCRYPT); // Hasheamos la contraseña
 
+    // Instanciamos la clase de conexión a la base de datos.
     $db = new DatabasePDO();
     $conn = $db->conn;
 
-    try{
-        $query = $conn->prepare("
-            INSERT INTO usuarios (username, nombre, apellidos, contrasena)
-            VALUES (:username, :nombre, :apellidos, :contrasena)
-            ");
-            $query->execute([
-                ':username' =>$username,
-                ':nombre' => $nombre,
-                ':apellidos' => $apellidos,
-                ':contrasena' => $contrasena
-            ]);
-            echo '<div class="alert alert-succes">Usuario creado con éxito.</div>';
-    } catch (PDOException $e) {
-        echo '<div class="alert alert-danger"Error al crear usuarios: ' . $e->getMessege() . '</div>';
-    }
+    // Preparamos la consulta para insertar el nuevo usuario en la base de datos.
+    $query = $conn->prepare("INSERT INTO usuarios (username, nombre, apellidos, contrasena) VALUES (:username, :nombre, :apellidos, :contrasena)");
+
+    // Ejecutamos la consulta con los valores proporcionados.
+    $query->execute([
+        ':username' => $username,
+        ':nombre' => $nombre,
+        ':apellidos' => $apellidos,
+        ':contrasena' => $contrasena
+    ]);
+
+    // Si todo ha salido bien, redirigimos a la lista de usuarios.
+    header("Location: usuarios.php");
+    exit(); // Importante para evitar que el código continúe ejecutándose.
+} else {
+    // Si no se ha enviado por POST, redirigimos al formulario de creación de usuario.
+    header("Location: nuevoUsuarioForm.php");
+    exit();
 }
 ?>
-<a href="usuarios.php" class="btn btn-secondary">Volver a la lista</a>
+
+

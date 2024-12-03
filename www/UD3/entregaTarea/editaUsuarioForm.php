@@ -1,3 +1,22 @@
+<?php
+require 'conexiones/pdo.php';
+
+if (isset($_GET['id'])) {
+    $id = (int)$_GET['id'];
+    $db = new DatabasePDO();
+    $conn = $db->conn;
+
+    $query = $conn->prepare("SELECT * FROM usuarios WHERE id = :id");
+    $query->execute([':id' => $id]);
+    $usuario = $query->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario) {
+        die('<div class="alert alert-danger">Usuario no encontrado.</div>');
+    }
+} else {
+    die('<div class="alert alert-danger">ID no especificado.</div>');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

@@ -23,7 +23,7 @@ if ($conexion->query($sql) == TRUE) {
 
 // 4. Seleccionar a base de datos
 if (!$conexion->select_db($dbName)) {
-    die('Non se puido seleccionar a base de datos: ' $conexion->error . '<br>');
+    die('Non se puido seleccionar a base de datos: ' . $conexion->error . '<br>');
 
 }
 
